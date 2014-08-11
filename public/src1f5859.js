@@ -756,7 +756,7 @@ define("packages/formFactory/apiinfoFormFactory.js", ["lib/jsonParser.js", "form
     this.parent_init(e, t);
   }, h.prototype.submit = function(e) {
     var t, n, r, i, s, o, a, c, h, p, d, v, m, g, y;
-    return m = "", i = "http://127.0.0.1:18080/apiagent", t = $(e).parent(), v = t.attr("action-target") + "?", g = t.attr("form-method"), c = l(this, t), c ? (this.checkResult = u.validateForm(t, !0), this.checkResult === !1 ? (a = t.find("#submit"), a.removeClass("submit").addClass("unsubmit"), !1) : (t.attr("form-type") === "args" ? (m = f(m, t, "input"), m = f(m, t, "select"), v += m, i = i + "?url=" + encodeURIComponent(v) + "&method=" + g + "&body=0") : (v = t.find('input[name="URL"]').val(), i = i + "?url=" + v + "&body=1"), t[0].setAttribute("action", i), t.trigger("submit"), !0)) : !1;
+    return m = "", i = "/apiagent", t = $(e).parent(), v = t.attr("action-target") + "?", g = t.attr("form-method"), c = l(this, t), c ? (this.checkResult = u.validateForm(t, !0), this.checkResult === !1 ? (a = t.find("#submit"), a.removeClass("submit").addClass("unsubmit"), !1) : (t.attr("form-type") === "args" ? (m = f(m, t, "input"), m = f(m, t, "select"), v += m, i = i + "?url=" + encodeURIComponent(v) + "&method=" + g + "&body=0") : (v = t.find('input[name="URL"]').val(), i = i + "?url=" + v + "&body=1"), t[0].setAttribute("action", i), t.trigger("submit"), !0)) : !1;
   }, o.register("ApiinfoFormFactory", h), t = h;
 });;
 define("packages/formFactory/rawinfoFormFactory.js", ["formValidator.js", "packages/formFactory/formFactory.js", "packages/formFactory/formRegister.js"], function(e, t, n) {
@@ -804,7 +804,7 @@ define("packages/formFactory/callbackinfoFormFactory.js", ["formValidator.js", "
     this.parent_selectForm(e), t = $("#formContainer").find("form"), t.length !== 0 && t.find("#bodyInputContainer").length === 0 && (n = $('<input type="text" class="hide" name="body" id="bodyInputContainer"/>'), t.append(n));
   }, l.prototype.submit = function(e) {
     var t, n, r, i, s, o;
-    return n = $(e).parent(), o = n.find("input[name='body']").val(), t = n.find("input[reserved-name='URL']").val(), r = "http://127.0.0.1:18080/callbackagent?url=" + encodeURIComponent(t), n[0].setAttribute("action", r), i = a.call(this), n.find("#bodyInputContainer").val(i), !0;
+    return n = $(e).parent(), o = n.find("input[name='body']").val(), t = n.find("input[reserved-name='URL']").val(), r = "/callbackagent?url=" + encodeURIComponent(t), n[0].setAttribute("action", r), i = a.call(this), n.find("#bodyInputContainer").val(i), !0;
   }, o.register("CallbackinfoFormFactory", l), t = l;
 });;
 define("packages/formFactory/formFactory.js", ["common/viewer.js", "common/eventCenter.js", "formValidator.js"], function(e, t, n) {

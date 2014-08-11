@@ -9,7 +9,9 @@
     "dependencies": {
         "wechat": "~0.6.8",
         "express": "~3.4.8",
-        "pm": "*"
+        "pm": "*",
+        "xml2js": "*",
+        "bufferhelper": "*"
     }
 }
 
