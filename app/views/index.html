@@ -24,27 +24,31 @@
 </div>
 <div id="main" class="main">
   <h1>
-    本地调试配置(ajax)
+    本地调试配置
   </h1>
   
   <div class="panel">
+    <div id="description" class="des">
+      此工具只支持callbackagent消息接口
+    </div>
     <div class="content">
       <div class="inputDiv">
         <span class="red">*</span> 
-        <span class="name">apiagent请求路径 : </span>
-        <input type="text" id="input_apiagent_url" method="GET" data-type="string" required="true">
-        <span class="tips">例 /apiagent</span>
+        <span class="name">Token : </span>
+        <input type="text" id="input_token" method="GET" data-type="string" required="true">
+        <span class="tips">验证消息</span>
         <br>
+        <span class="errMsg" id="submit_tip"></span>
       </div>
 
-      <div class="inputDiv">
+      <!-- <div class="inputDiv">
         <span class="red">*</span> 
         <span class="name">callbackagent请求路径 : </span>
         <input type="text" id="input_callbackagent_url" method="GET" data-type="string" required="true">
         <span class="tips">例 callbackagent</span>
         <br>
-        <span class="errMsg" id="submit_tip"></span>
-      </div>
+        
+      </div> -->
 
       <input type="submit" class="unsubmit" id="confirm_submit" value="保存">
     </div>
@@ -61,42 +65,39 @@ window.onload = function(){
   }
 
   // input element
-  var input_apiagent_url = document.querySelector('#input_apiagent_url'),
-      input_callbackagent_url = document.querySelector('#input_callbackagent_url');
+  var input_token = document.querySelector('#input_token');
+      // input_callbackagent_url = document.querySelector('#input_callbackagent_url');
 
   // tip element
   var submit_tip = document.querySelector('#submit_tip');
 
-  var storage_apiagent_url = localStorage['apiagent_url'],
-      storage_callbackagent_url = localStorage['callbackagent_url'];
+  var storage_input_token = localStorage['input_token'];
 
   // storage input
-  storage_apiagent_url && (input_apiagent_url.value = window.config.apiagent_url = storage_apiagent_url);
-  storage_callbackagent_url && (input_callbackagent_url.value = window.config.callbackagent_url = storage_callbackagent_url);
+  storage_input_token && (input_token.value = window.config.input_token = storage_input_token);
 
   // click submit
   document.querySelector('#confirm_submit').addEventListener('click', configCheck, false);
 
   // valid
   function configCheck(){
-    if( $.trim(input_apiagent_url.value) && $.trim(input_callbackagent_url.value) ) {
+    if( $.trim(input_token.value) ) {
       configSubmit();
     }else{
       submit_tip.className = 'errMsg red';
-      submit_tip.innerHTML = 'url required!';
+      submit_tip.innerHTML = 'input required!';
     }
   }
 
   // submit&storage
   function configSubmit(){
-    var va = $.trim( input_apiagent_url.value ),
-        vc = $.trim( input_callbackagent_url.value );
+    var va = $.trim( input_token.value );
 
-    localStorage.setItem( 'apiagent_url', va );
-    localStorage.setItem( 'callbackagent_url', vc );
+    localStorage.setItem( 'input_token', va );
+    // localStorage.setItem( 'callbackagent_url', vc );
 
-    window.config.apiagent_url = va;
-    window.config.callbackagent_url = vc;
+    window.config.input_token = va;
+    // window.config.callbackagent_url = vc;
 
     submit_tip.className = 'errMsg green';
     submit_tip.innerHTML = 'done';

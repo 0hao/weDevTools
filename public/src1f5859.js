@@ -804,7 +804,10 @@ define("packages/formFactory/callbackinfoFormFactory.js", ["formValidator.js", "
     this.parent_selectForm(e), t = $("#formContainer").find("form"), t.length !== 0 && t.find("#bodyInputContainer").length === 0 && (n = $('<input type="text" class="hide" name="body" id="bodyInputContainer"/>'), t.append(n));
   }, l.prototype.submit = function(e) {
     var t, n, r, i, s, o;
-    return n = $(e).parent(), o = n.find("input[name='body']").val(), t = n.find("input[reserved-name='URL']").val(), r = "/callbackagent?url=" + encodeURIComponent(t), n[0].setAttribute("action", r), i = a.call(this), n.find("#bodyInputContainer").val(i), !0;
+    if(!window.config.input_token) {
+      alert('token!');
+    }
+    return n = $(e).parent(), o = n.find("input[name='body']").val(), t = n.find("input[reserved-name='URL']").val(), r = "/callbackagent?token="+ window.config.input_token +"&url=" + encodeURIComponent(t), n[0].setAttribute("action", r), i = a.call(this), n.find("#bodyInputContainer").val(i), !0;
   }, o.register("CallbackinfoFormFactory", l), t = l;
 });;
 define("packages/formFactory/formFactory.js", ["common/viewer.js", "common/eventCenter.js", "formValidator.js"], function(e, t, n) {

@@ -11,6 +11,10 @@ var core = require('../../libs/core');
 
 exports.index = function(req, res, next) {
 
+  var reqUrlObj = url.parse(req.url, true);
+
+  var token = reqUrlObj['query']['token'];
+
   var xml = req.body.body;
   // xml = xml.replace(/^\ufeff/i, "").replace(/^\ufffe/i, ""); 
   res.send({'body':xml});
@@ -26,6 +30,7 @@ exports.index = function(req, res, next) {
       nonce = Math.floor(Math.random()*10);
 
   var sign = core.getSignature({
+    'token': token,
     'timestamp': timestamp,
     'nonce': nonce
   });

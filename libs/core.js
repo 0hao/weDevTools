@@ -17,11 +17,12 @@ var core = {};
  * 生成sign
 */
 core.getSignature = function (query) {
+  var token = query.token;
   var timestamp = query.timestamp;
   var nonce = query.nonce;
 
   var shasum = crypto.createHash('sha1');
-  var arr = [CONFIG.TOKEN, timestamp, nonce].sort();
+  var arr = [token, timestamp, nonce].sort();
   shasum.update(arr.join(''));
 
   return shasum.digest('hex');
