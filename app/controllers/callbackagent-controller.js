@@ -11,30 +11,29 @@ var core = require('../../libs/core');
 
 exports.index = function(req, res, next) {
 
+  // get token
   var reqUrlObj = url.parse(req.url, true);
+  var reqToken = reqUrlObj['query']['token'];
 
-  var token = reqUrlObj['query']['token'];
+  var reqXml = req.body.body;
 
-  var xml = req.body.body;
-  // xml = xml.replace(/^\ufeff/i, "").replace(/^\ufffe/i, ""); 
-  res.send({'body':xml});
-
-  var jsonxml;
-  xml2js.parseString(xml, {trim: true}, function(err, result){
-    jsonxml =  result;
+  // get post url
+  var jsonXml;
+  xml2js.parseString(reqXml, {trim: true}, function(err, result){
+    jsonXml =  result;
   });
+  var req_url = url.parse(jsonXml.xml.URL[0]);
 
-  var req_url = url.parse(jsonxml.xml.URL[0]);
-
+  // sign加签
   var timestamp = Date.now(),
       nonce = Math.floor(Math.random()*10);
-
   var sign = core.getSignature({
-    'token': token,
+    'token': reqToken,
     'timestamp': timestamp,
     'nonce': nonce
   });
 
+  // post params
   var params = {
     'host': req_url.hostname,
     'port': req_url.port || 80,
@@ -43,10 +42,12 @@ exports.index = function(req, res, next) {
     'headers': {
       'Connection': "Keep-Alive",
       'Content-Type': 'application/xml',
-      'Content-Length': xml.length
+      'Content-Length': reqXml.length
     }
   };
 
-  core.postXml2Developer(params, xml);
+  core.postXml2Developer(params, reqXml);
+
+  res.send({'body':reqXml});
 
 }
